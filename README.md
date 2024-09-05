@@ -109,9 +109,11 @@ urlpatterns = [
 ]
 ```
 
-**7. Deployment ke pws**
+**7. Deployment ke pws DAN koyeb**
 
-Lakukan git add ., git commit -m "message" , git push pwss master (dalam kasus ini diasumsikan bahwa remote sudah ditentukan). Perhatikan bahwa dalam `settings.py` , 'vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id/' perlu diketik sebagai salah satu elemen ALLOWED_HOSTS. 
+Lakukan git add ., git commit -m "message" , git push pwss master (dalam kasus ini diasumsikan bahwa remote sudah ditentukan). Perhatikan bahwa dalam `settings.py` , 'vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id/' perlu diketik sebagai salah satu elemen ALLOWED_HOSTS.
+
+Setting beberapa hal di Koyeb in case pws bermasalah. Linknya :  https://dusty-penguin-fasilkomui-750583cd.koyeb.app/
 
 **8. Membuat `README.md`**
 
