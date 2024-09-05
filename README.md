@@ -18,7 +18,9 @@ Perintah ini membuat sebuah folder baru dengan struktur proyek Django.
 
 Masuk ke folder proyek yang baru dibuat:
 
+```
 cd simplepbpshop
+```
 
 Kemudian, buat aplikasi baru bernama 'main':
 
@@ -38,7 +40,7 @@ urlpatterns = [
 ]
 ```
 
-**4. Membuat Model 'Item'**
+**4. Membuat Model `Item`**
 
 Buka file `main/models.py` dan menambahkan kode berikut:
 
