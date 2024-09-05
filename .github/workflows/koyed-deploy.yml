@@ -22,12 +22,13 @@ jobs:
     - name: Install Koyeb CLI
       run: |
         curl -fsSL https://cli.koyeb.com/install.sh | sh
+        echo "::add-path::$(/home/runner/.koyeb/bin)" # Add Koyeb CLI to PATH
     - name: Deploy to Koyeb
       env:
         KOYEB_TOKEN: ${{ secrets.KOYEB_TOKEN }}
       run: |
-        koyeb app init simplepbpshop
-        koyeb service init simplepbpshop-service \
+        koyeb apps create simplepbpshop
+        koyeb services create simplepbpshop-service \
           --git github.com/${{ github.repository }} \
           --git-branch master \
           --ports 8000:http \
@@ -36,4 +37,4 @@ jobs:
           --env DJANGO_SETTINGS_MODULE=simplepbpshop.settings \
           --env DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }} \
           --env DEBUG=False
-        koyeb app deploy simplepbpshop
+        koyeb apps deploy simplepbpshop

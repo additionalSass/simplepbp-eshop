@@ -23,7 +23,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-z=yppmhh5k8ytq
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id', 'vander-gerald-simplepbpshop.pbp.cs.ui.ac.id', 'https://dusty-penguin-fasilkomui-750583cd.koyeb.app/']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id', 'vander-gerald-simplepbpshop.pbp.cs.ui.ac.id', 'dusty-penguin-fasilkomui-750583cd.koyeb.app']
 
 # Application definition
 
