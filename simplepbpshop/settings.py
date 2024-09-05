@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,14 +19,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-z=yppmhh5k8ytq%zveez$*#*opj)cb22pvonrrh%dv7tv02b#d'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-z=yppmhh5k8ytq%zveez$*#*opj)cb22pvonrrh%dv7tv02b#d')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id','vander-gerald-simplepbpshop.pbp.cs.ui.ac.id']
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id', 'vander-gerald-simplepbpshop.pbp.cs.ui.ac.id', 'https://dusty-penguin-fasilkomui-750583cd.koyeb.app/']
 
 # Application definition
 
@@ -117,8 +114,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+
