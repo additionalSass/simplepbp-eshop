@@ -56,4 +56,7 @@ Hasil screenshoot
 
 ![Capture4.PNG](Capture4.PNG)
 
-deploy di : dusty-penguin-fasilkomui-750583cd.koyeb.app
+deploy di : 
+http://vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id/
+
+dusty-penguin-fasilkomui-750583cd.koyeb.app
