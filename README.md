@@ -4,199 +4,56 @@ Nama : Vander Gerald Sukandi
 
 NPM  : 1906350603
 
-## Checklist untuk Tugas PBP
+## Tugas 3 Menjawab Beberapa Pertanyaan
 
-**1. Membuat Proyek Django Baru**
 
-Buka command prompt dan menjalankan perintah berikut:
+**1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?**
 
-django-admin startproject simplepbpshop
+Kita bisa mendefinisikan data delivery sebagai segala metode, protokol, format data (seperti json) yang melakukan transfer data dari satu bagian sistem ke bagian lain, atau dari satu sistem ke sistem lain yang berbeda. Hal ini melibatkan pengiriman, penerimaan, dan pemrosesan data sistem untuk memastikan bahwa data itu mencapai tujuan yang diinginkan. Nah, data delivery dibutuhkan untuk memampukan komunikasi antara dua bagian aplikasi web yang berbeda atau client dan server. Dengan kata lain, data delivery diperlukan supaya data bergerak dengan lancar dan aman sehingga website bisa memberikan konten dinamis, interaksi yang baik dengan user, dan integrasi dengan service lain di internet. Tanpa data delivery, dua bagian berbeda tidak bisa berkomunikasi.
 
-Perintah ini membuat sebuah folder baru dengan struktur proyek Django.
+**2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?**
 
-**2. Membuat Aplikasi 'main'**
+JSON lebih baik menurutku untuk aplikasi web berbasis Djangi. Lebih simpel, efisien, dan terlalu sering dipakai dibandingkan dengan XML saat berinteraksi dengan API dan pertukaran data.
 
-Masuk ke folder proyek yang baru dibuat:
+JSON lebih populer karena lebih simpel dan bisa dibaca, standar format untuk JavaScript dan pertukaran data dalam aplikasi AJAX, didukung oleh REST frameworks dan API, memiliki compatibility dengan semua bahasa pemrograman yang popular. XML lebih kuno dan terkesan lebih verbose, dan tidak ringan.
 
+**3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?**
+
+Method is_valid() merupakan built-in yang disediakan untuk Form dan modelForm untuk melakukan validasi data yang dikumpulkan oleh user melalui form. Method itu melakukan validation check berdasarkan field dari form beserta validator , data cleaning, error collecting. Kita membutuhkannya supaya data itu dijamin valid dan integral dan mencegah error seandainya data invalid diproses. Dilakukan juga pembersihan data (cleaned_data pada form) yang mana method clean() bisa dilakukan kostumisasi jika butuh validasi dan pembersihan tambahan. Selain itu, kita juga mencegah input berbahaya seperti SQL injection atau XSS dengan validation.
+
+**4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?**
+
+CSRF token dibutuhkan untuk melindungi website terhadap serangan Cross-Site Request Forgery (CSRF). Serangan CSRF terjadi jike website licik menipu client dengan memintanya melakukan submit action-action tertentu di aplikasi web yang mana user terautentikasi. Menyertakan csrf token dengan {% csrf_token %} di dalam elemen <form> dalam template html Django, memastikan bahwa terjadi verifikasi bahwa request datang dari website kita dan bukan sumber lain.Akan ada input field tersembunyi dengan token unik yang terkait dengan session user saat melakukan csrf.Ketika form submit, Django akan mengecek token itu dan membandingkan apakah berpasangan dengan yang disimpan di session user. Jika tidak, Django menolak request dan mencegah aksi yang tidak terotorisasi. Jika tidak menggunakan csrf token, attacker bisa membuat manipulasi sehingga user melakukan request yang tidak legit untuk form tersebut.
+
+
+
+**5. Jelaskan cara kamu mengimplementasikan checklist di atas secare step-by-step**
+
+Membuat forms.py. Mengimplementasikan ItemEntryForm sesuai dengan model Item yang ada. Tentu saja mengingat import
+Mengubah template first_page.html dengan menambahkan it_entries dan beberapa baris untuk menampilkannya,
+Membuat create_item_entry di views.py . Menambahkan elemen context baru untuk menampilkan item_entries di template first_page.html di first_page.
+Membuat create_item_entry.html dengan melihat form dari forms.py . Ingat csrf_token . 
+Membuat views untuk json dan xml, kemudian json untuk id, xml untuk id
+Menambahkan
 ```
-cd simplepbpshop
+path('simple_item_form/', create_item_entry, name='create_item_entry'),
+path('xml/', show_xml, name='show_xml'),
+path('json/', show_json, name='show_json'),
+path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
+path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
 ```
+ke `urls.py` beserta import functions dari views yang sesuai. 
 
-Kemudian, buat aplikasi baru bernama 'main':
+**6. Postman**
 
-python manage.py startapp main
+Hasil screenshoot 
 
-**3. Routing untuk Aplikasi 'main'**
+![Capture1.PNG](Capture1.PNG)
 
-Buka file `simplepbpshop/urls.py` dan menambahkan baris berikut di dalam list `urlpatterns`:
+![Capture2.PNG](Capture2.PNG)
 
-``` python
-from django.contrib import admin
-from django.urls import path, include
+![Capture3.PNG](Capture3.PNG)
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('main.urls')),  # Tambahkan baris ini
-]
-```
+![Capture4.PNG](Capture4.PNG)
 
-**4. Membuat Model `Item`**
-
-Buka file `main/models.py` dan menambahkan kode berikut:
-
-```python
-import uuid
-from django.db import models
-from django.core.validators import MinValueValidator
-
-class Item(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=30, unique=True)
-    price = models.IntegerField(validators=[MinValueValidator(0)])
-    description = models.TextField(default='Default')
-    stocks = models.IntegerField(validators=[MinValueValidator(0)])
-    recom_status_last_update = models.DateTimeField(null=True,blank=True)
-
-    def __str__(self):
-        return self.name
-```
-
-Dibuatlah model `Item` dengan atribut 'name', 'price', 'id', dan beberapa atribut lain dengan Field-Field berbeda. MinValueValidator di sini membuat nilai-nilai di tas angka tertentu saja yang valid untuk IntegerField.
-
-**5. Fungsi Pertama di `views.py` dan Template HTML**
-
-Buka file `main/views.py` dan menambahkan kode berikut:
-
-```python
-from django.shortcuts import render, redirect 
-
-def first_page(request):
-    context = {'application':'Simple PBP E-Shop','app':'main','name':'Vander Gerald Sukandi','NPM':'1906350603','class':'PBP A'}
-    return render(request,'first_page.html', context)
-```
-
-Buat file `main/templates/first_page.html`. Perhatikan bahwa hal-hal di dalam {{ }} akan diubah sesuai dengan context dalam views.
-
-```html
-...
-
-<h1>{{ application }}</h1>
-
-<h2>Welcome to {{ app }}</h2>
-
-<h3>My Student Information:</h3>
-<ul>
-    <li>Name: {{ name }}</li>
-    <li>Student ID: {{ NPM }}</li>
-    <li>Class: {{ class }}</li>
-</ul>
-</body>
-...
-
-```
-
-**6. Routing di `urls.py` App `main`**
-
-Buat file `main/urls.py` dan tambahkan kode berikut:
-
-```python
-from django.urls import path
-from main.views import first_page
-app_name = 'main'
-
-urlpatterns = [
-    path('', first_page, name='first_page'),
-]
-```
-
-**7. Deployment ke pws DAN koyeb**
-
-Lakukan git add ., git commit -m "message" , git push pwss master (dalam kasus ini diasumsikan bahwa remote sudah ditentukan). Perhatikan bahwa dalam `settings.py` , 'vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id/' perlu diketik sebagai salah satu elemen ALLOWED_HOSTS.
-
-Setting beberapa hal di Koyeb in case pws bermasalah. Linknya :  https://dusty-penguin-fasilkomui-750583cd.koyeb.app/
-
-**8. Membuat `README.md`**
-
-Buat file `README.md` di root folder proyek dan menyertakan tautan ke aplikasi yang telah di-deploy. 
-
-**Jawaban Pertanyaan di `README.md`**
-
-**a. Implementasi Checklist Step-by-Step (Sudah Dilakukan Diatas)**
-
-**b. Bagan Request-Response dan Kaitan Antar Komponen**
-
-```            
-                      request
-+-------------------+       +----------------------+     +-------------------+     +-------------------+
-| Client (Browser)  |-----> |simplepbpshop/urls.py | --> |    main/urls.py   | --> |   main/views.py   | 
-+-------------------+       +----------------------+     +-------------------+     +-------------------+
-                                ^                               ^                        |
-                                |                               |                        |
-                                +-------------------------------+                        | Render HTML dengan data
-                                                                                         | dari context yang didapatkan dalam function yang terkait
-                                                                                         v
-                                                                                 +-------------------+
-                                                                                 |  main/templates   |
-                                                                                 +-------------------+
-                                                                                         |
-                                                                                         | response 
-                                                                                         v
-                                                                                 +-------------------+
-                                                                                 |  Client (Browser) |
-                                                                                 +-------------------+
-```
-
-**Penjelasan:**
-
-1. **Client (Browser)** mengirimkan HTTP request ke server.
-2. **`simplepbpshop/urls.py`** (root URL configuration) akan menerima request dan mencari URL pattern yang cocok. Pada kasus ini, request akan di-routing ke `main/urls.py`.
-3. **`main/urls.py`** (URL configuration aplikasi `main`) mencari URL pattern yang cocok. Jika pattern cocok, request diarahkan ke fungsi terkait di `main/views.py`.
-4. **`main/views.py`** (application logic dari app 'main') memproses request, (jika di-perlukan dan ada import) akan mengambil data dari **`main/models.py`** (terkait dengan database ORM dalam Django), dan menyiapkan `context` untuk template. 
-5. **`main/views.py`** me-render template HTML tertentu yang ada di **`main/templates`** sesuai dengan data yang disediakan dari `context`.
-6. Django melakukan response. HTML yang telah di-render dikirimkan kembali ke **Client (Browser)**.
-
-**c. Virtual Environment**
-
-Virtual environment bertujuan untuk mengisolasi dependensi proyek Python. Dengan virtual environment, setiap proyek dapat memiliki set library dan versi Python berbeda yang umumnya disesuaikan dengan requirements.txt untuk setiap proyek yang berbeda.
-
-**Tiga Alasan Orang Menggunakan Virtual Environment**
-
-- **Mencegah Konflik Dependensi:** Proyek yang berbeda bisa jadi memakai versi library yang berbeda. Virtual environment memastikan bahwa setiap proyek menggunakan library yang tepat.
-- **Mempermudah Reproduksi Lingkungan:** Jika kita sudah mendefinisikan dependensi di file `requirements.txt`, kita dapat mereproduksi lingkungan development Python itu di mesin lain.
-- **Menjaga Kebersihan Sistem:** Virtual environment mencegah library proyek memengaruhi sistem Python global.
-
-**Apakah Kita Bisa Membuat Aplikasi Django Tanpa Virtual Environment?**
-
-Kita bisa, tetapi tidak disarankan. Tanpa virtual environment, kita berisiko mengalami konflik dependensi dan kesulitan dalam mereproduksi web development environment yang diperlukan.
-
-**d. MVC, MVT, MVVM**
-
-Ketiga pola ini adalah software design pattern yang bertujuan untuk memisahkan concerns (Ingat prinsip separation of concerns!) dalam aplikasi yang tidak terlalu sederhana:
-
-**1. MVC (Model-View-Controller)**
-
-- **Model:** Umumnya mengolah dan melibatkan data dan business logic.
-- **View:** Menampilkan data kepada pengguna dan menerima input dari pengguna.
-- **Controller:** Menerima input pengguna, memprosesnya, update hal-hal untuk model, dan memilih view yang tepat.
-
-**2. MVT (Model-View-Template)**
-
-- **Model:** Sama seperti MVC.
-- **View:** Bertugas memproses request, mengambil data dari model, dan memanggil template. View ini pada Django menjadi seperti Controller di MVC. 
-- **Template:** Menampilkan data ke pengguna (mirip dengan View di MVC).
-
-**Perbedaan MVC dan MVT:**
-
-Pada MVC, Controller memilih View yang akan ditampilkan, sedangkan pada MVT yang dimiliki oleh Django, View (fungsi di `views.py`) lah yang memilih template yang akan di-render. 
-
-**3. MVVM (Model-View-ViewModel)**
-
-- **Model:** Sama seperti MVC.
-- **View:** Menampilkan data dan menerima input. View terhubung ke ViewModel melalui data binding. Data binding menghubungkan data dari Model dan elemen UI dari ViewModel.
-- **ViewModel:** Menyediakan data yang dibutuhkan oleh View dan menangani interaksi pengguna.
-
-**Perbedaan MVVM dengan MVC/MVT:**
-
-MVVM menekankan pada data binding antara View dan ViewModel yang membuat pemisahan yang lebih jelas antara User Interface dan application logic.
-
-Django menggunakan pola MVT yang mana framework ini sendiri yang bertindak sebagai Controller.
+deploy di : dusty-penguin-fasilkomui-750583cd.koyeb.app

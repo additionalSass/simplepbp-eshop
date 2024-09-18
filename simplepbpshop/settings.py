@@ -124,9 +124,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
+else:
+    SECURE_SSL_REDIRECT = False
 
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id", "http://vander-gerald-simplepbpshop.pbp.cs.ui.ac.id", "http://dusty-penguin-fasilkomui-750583cd.koyeb.app"]

@@ -16,5 +16,35 @@
     <li>Student ID: {{ NPM }}</li>
     <li>Class: {{ class }}</li>
 </ul>
+
+{% if not it_entries %}
+<p>Belum ada data item pada simple pbp shop.</p>
+{% else %}
+<table>
+    <tr>
+        <th> Item Name </th>
+        <th> Price </th>
+        <th> Description </th>
+        <th> Mood Stocks </th>
+    </tr>
+
+    {% comment %} Berikut cara memperlihatkan data item di bawah baris ini
+    {% endcomment %}
+    {% for it_entry in it_entries %}
+    <tr>
+        <td>{{it_entry.name}}</td>
+        <td>{{it_entry.price}}</td>
+        <td>{{it_entry.description}}</td>
+        <td>{{it_entry.stocks}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'main:create_item_entry' %}">
+    <button>Add New Item Entry</button>
+</a>
 </body>
 </html>
