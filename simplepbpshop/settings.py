@@ -21,7 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-z=yppmhh5k8ytq%zveez$*#*opj)cb22pvonrrh%dv7tv02b#d')
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+#DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id', 'vander-gerald-simplepbpshop.pbp.cs.ui.ac.id', 'dusty-penguin-fasilkomui-750583cd.koyeb.app']
 
@@ -52,7 +54,7 @@ ROOT_URLCONF = 'simplepbpshop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,7 +131,5 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
-else:
-    SECURE_SSL_REDIRECT = False
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id", "http://vander-gerald-simplepbpshop.pbp.cs.ui.ac.id", "http://dusty-penguin-fasilkomui-750583cd.koyeb.app"]

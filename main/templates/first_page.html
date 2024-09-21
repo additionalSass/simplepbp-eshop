@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ application }}</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>{{ application }}</title>
+{% endblock meta %}
+
+{% block content %}
 <h1>{{ application }}</h1>
 
-<h2>Welcome to {{ app }}</h2>
+<h2>Welcome to {{ app }}, {{current_username}}</h2>
 
 <h3>My Student Information:</h3>
 <ul>
@@ -22,20 +21,19 @@
 {% else %}
 <table>
     <tr>
-        <th> Item Name </th>
-        <th> Price </th>
-        <th> Description </th>
-        <th> Mood Stocks </th>
+        <th>Item Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Stocks</th>
+        <th>User</th>
     </tr>
-
-    {% comment %} Berikut cara memperlihatkan data item di bawah baris ini
-    {% endcomment %}
     {% for it_entry in it_entries %}
     <tr>
         <td>{{it_entry.name}}</td>
         <td>{{it_entry.price}}</td>
         <td>{{it_entry.description}}</td>
         <td>{{it_entry.stocks}}</td>
+        <td>{{it_entry.user.username}}</td>
     </tr>
     {% endfor %}
 </table>
@@ -46,5 +44,6 @@
 <a href="{% url 'main:create_item_entry' %}">
     <button>Add New Item Entry</button>
 </a>
-</body>
-</html>
+
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+{% endblock content %}

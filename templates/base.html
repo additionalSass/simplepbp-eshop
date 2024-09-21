@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PBP 2024 Vander</title>
+    {% block meta %}{% endblock meta %}
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="{% url 'main:first_page' %}">Main</a></li>
+        {% if not user.is_authenticated %}
+        <li><a href="{% url 'main:login' %}">Login</a></li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'main:logout' %}">Logout</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<main>
+    {% block content %}{% endblock content %}
+</main>
+
+<footer>
+    <p> PBP 2024 Vander Gerald Sukandi</p>
+</footer>
+</body>
+</html>
