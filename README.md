@@ -71,11 +71,12 @@ Mengubah context views untuk first_page
 
 
 
-![Capture5.PNG](Tampilan halaman awal di lokal)
+![Capture5.PNG](Capture5.PNG)
 
-![Capture6.PNG](Tampilan login)
+![Capture6.PNG](Capture6.PNG)
 
 deploy di : 
+
 http://vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id/
 
 dusty-penguin-fasilkomui-750583cd.koyeb.app
