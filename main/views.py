@@ -57,6 +57,7 @@ def show_json_by_id(request, id):
     data = Item.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+
 def register(request):
     form = UserCreationForm()
     if request.method == "POST":
