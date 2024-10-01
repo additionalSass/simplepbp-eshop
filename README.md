@@ -6,77 +6,84 @@ NPM  : 1906350603
 
 ## Tugas 4 Menjawab Beberapa Pertanyaan
 
+Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
 
-**1. Apa perbedaan antara HttpResponseRedirect() dan redirect()?**
+**1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!**
 
-Perbedaannya adalah redirect() lebih fleksibel dan user-friendly dalam perkara menerima berbagai type dari input (URLs, view names, model), sementara HttpResponseRedirect() lebih low-level dan membutuhkan URL string yang tepat untuk inputnya. Kita bisa menyebut function lebih high-level ini sebagai sebuah shortcut. 
+Ketika ada beberapa CSS selector untuk suatu elemen HTML, browser menentukan style mana yang akan diterapkan berdasarkan specificity dan urutan cascade. Specificity dihitung dengan melihat inline style (menggunakan style) dengan prioritas tertinggi, diikuti oleh ID selector (#), class dan attribute selector (.), kemudian element selector (seperti p { } ) yang memiliki specificity terendah. Menggunakan !important over-ride deklarasi lain, tetapi tidak direkomendasikan. Dan jika dua selector memiliki specificity yang sama, yang muncul terakhir di file css atau html akan mendapatkan presedens .
 
-Dari dokumentasinya :
+
+
+**2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!**
+
+Responsive design menjamin bahwa sebuah website atau aplikasi web memberikan pengalaman pengguna yang optimal di berbagai device, dari desktop sampai mobile. Hal ini penting karena kita menginginkan User Experience yang baik dan akomodasi user terhadap web yang bisa diakses lewat mobile phone. 
+
+Contoh aplikasi web yang responsif: website tokopedia memiliki layout design yang berbeda tapi konsisten di desktop dan mobile.
+
+Contoh aplikasi web yang tidak responsif: aren.cs.ui.ac.id . Desain tidak dibuat untuk mobile . 
+
+**3.  Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!**
+
+Margin, border, dan padding adalah bagian dari css box .
+
+Margin adalah ruang diluar border yang memisahkan satu elemen dari elemen lain.
+Border adalah baris yang membungkus padding dan content.
+Padding adalah ruang di dalam border, di antara border dan content
 ```
-redirect(to, *args, permanent=False, **kwargs)[source]¶
-    Returns an HttpResponseRedirect to the appropriate URL for the arguments passed.
-    The arguments could be:
-        A model: the model’s get_absolute_url() function will be called.
-        A view name, possibly with arguments: reverse() will be used to reverse-resolve the name.
-        An absolute or relative URL, which will be used as-is for the redirect location.
-    By default issues a temporary redirect; pass permanent=True to issue a permanent redirect.
-``` 
-
-
-**2. Jelaskan cara kerja penghubungan model Product dengan User!**
-
-Saya tidak memakai model Product, tetapi model Item di sini. Tetapi secara esensi sama saja. Di sini, User di dalam konteks ORM merupakan sebuah ForeignKey. Foreign key merupakan type field Django yang menciptakan relasi many-to-one. Hal ini berarti beberapa instance dari Item bisa dihubungkan dengan satu instance User. 
-
-Untuk menghubungkannya, digunakan models.ForeignKey di dalam Item model. Baris tersebut ialah 
+.element {
+    margin: 25px;
+}
+.element {
+    border: 2px solid #111;
+}
+.element {
+    padding: 15px;
+}
 ```
-user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-``` 
+Ketiga hal itu diimplementasikan oleh Django melalui CSS di template atau file static yang ditentukan lokasinya melalui STATIC_URL dan STATICFILES_DIRS. 
 
-Kemudian, kita bisa membuat baris seperti 'item.user = request.user' di dalam views.py untuk menyimpan instance Item tertentu yang diasosiasikan dengan user yang login.
+Dan kita bisa membuatnya dengan class dari Tailwind CSS.
 
-**3.  Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.**
+```
+<div class="m-5 p-4 border">
+    Content
+</div>
+```
 
-Authentication ialah proses memverifikasi identitas dari user. Pertanyaan yang dijawab ialah siapakah kamu yang sedang mengakses website melalui browser tertentu. Hal ini dilakukan melalui form login yang mana user harus menyediakan username dan password.
+**4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!***
 
-Authorization ialah proses menentukan apa saja yang diperbolehkan untuk user tertentu yang sudah log-in/terautentikasi/ Pertanyaan yang dijawab ialah apa yang kamu boleh lakukan. Sistem mengecek permission untuk akses resource atau melakukan tindakan tertentu.
+Keduanya merupakan model layout CSS untuk menciptakan web design yang responsif.
 
-Ketika user log in, dilakukan authentication dari credentials (username dan password) bisa dengan AuthenticationForm . Tetapi, pada dasarnya akan dilibatan authenticate() jika kita tidak membuat function sendiri. Ada built-in system untuk authentication (django.contrib.auth) yang digunakan untuk login, logout, password.  Jika berhasil submit credentials yang sesuai , akan dibuat session untuk user, disimpan infonya, dan user ditandai logged-in dengan fungsi login(). Authentication mengecek identitas, authorization mengecek permission.  
+Flexbox digunakan untuk layout satu-dimensi, bisa jadi baris atau kolom. Digunakan dengan `display:flex;` untuk containernya.
 
-**4. Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?**
+Ada property penting seperti flex-direction, justify-content , dan align-items. Flex digunakan untuk menyesuaikan letak objek, membuat navbar, dan membuat ruang dalam container.
 
-Django menggunakan session untuk mengingat bahwa sebuah user sudah login. Dan session ID setiap kali login digenerate dan disimpan dalam sebuah cookie dalam browser user. Django mampu untuk melihat user yang terkait dengan request selama ada session ID. Kegunaan lain cookie adalah mengingat preferensi user, tracking, dan personalisasi konten yang tidak disimpan di database terkait website itu. Semua cookie belum tentu aman untuk digunakan.
+Sedangkan grid layout bersifat dua-dimensi. Didefinisikan untuk kontainernya dengan `display:grid;`  . Digunakan untuk layout yang rumit seperti galeri gambar untuk sebuah website, struktur seperti tabel, dashboard, dll.
 
-Ada cookies yang digunakan untuk tracking dan iklan. Mereka adalah cookies beresiko yang tidak baik. Namun, untuk Django, kita bisa memastikan bahwa cookies yang dikirim hanyalah melalui HTTPS jika menggunakan SECURE_COOKIE sebagai contoh. 
 **5.  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**
 Membaca tutorial sebelumnya. 
-Memahami AuthenticationForm, UserCreationForm, HttpResponseRedirect, reverse yang dibutuhkan untuk tugas ini.
-Mengimplementasikan login_user, logout_user, dan register pada views.py dengan meniru dan memodifikasi apa yang terjadi di tutorial. 
-Menambahkan base.html di templates 
+Memahami AuthenticationForm, UserCreationForm, HttpResponseRedire 
 Menambahkan dan memodifikasi templates yang sesuai
 Menambahkan baris baru mengenai User untuk foreign key model Item di models.py . 
 Melakukan python manage.py makemigrations dan python manage.py migrate
 Menambahkan @login_required(login_url='/login') ke beberapa function Tugas 3 
 
 
-
-
 **5. Jelaskan cara kamu mengimplementasikan checklist di atas secare step-by-step**
+Membaca tutorial
+Menambahkan functions terkait edit dan delete Item di views.py dan menambahkan url routing terkait. 
+Menambahkan tailwind.css .
+Membuat navbar.html .
+Mengubah base.html.
+Mengubah template
+Mengubah settings.py untuk static . 
+Menambahkan gambar...
+Melakukan deployment.. 
 
-Membuat forms.py. Mengimplementasikan ItemEntryForm sesuai dengan model Item yang ada. Tentu saja mengingat import
-Mengubah template first_page.html dengan menambahkan it_entries dan beberapa baris untuk menampilkannya,
-Membuat create_item_entry di views.py . Menambahkan elemen context baru untuk menampilkan item_entries di template first_page.html di first_page.
-Menambahkan urls yang sesuai di urls.py 
-Membuat create_item_entry.html dengan melihat form dari forms.py . Ingat csrf_token . 
-Mengubah context views untuk first_page 
 
-
-
-![Capture5.PNG](Capture5.PNG)
-
-![Capture6.PNG](Capture6.PNG)
-
-deploy di : 
 
 http://vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id/
-
-dusty-penguin-fasilkomui-750583cd.koyeb.app

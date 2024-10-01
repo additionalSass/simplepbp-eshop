@@ -1,0 +1,51 @@
+<nav class="bg-blue-900 text-white p-4">
+    <div class="container mx-auto">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="{% url 'main:first_page' %}" class="text-xl font-bold">Simple PBP E-Shop 2024</a>
+                <a href="{% url 'main:first_page' %}" class="hidden sm:block hover:text-blue-200">Main</a>
+            </div>
+
+            <!-- Hamburger menu button -->
+            <button id="menu-toggle" class="sm:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+
+            <!-- Desktop menu -->
+            <div class="hidden sm:flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                <span class="text-sm">Welcome, {{ request.user.username }}</span>
+                <a href="{% url 'main:logout' %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    Logout
+                </a>
+                {% else %}
+                <a href="{% url 'main:login' %}" class="hover:text-blue-200">Login</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Mobile menu (hidden by default) -->
+        <div id="mobile-menu" class="hidden sm:hidden mt-4">
+            <div class="flex flex-col space-y-2">
+                <a href="{% url 'main:first_page' %}" class="hover:text-blue-200">Main</a>
+                {% if user.is_authenticated %}
+                <span class="text-sm">Welcome, {{ request.user.username }}</span>
+                <a href="{% url 'main:logout' %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 text-center">
+                    Logout
+                </a>
+                {% else %}
+                <a href="{% url 'main:login' %}" class="hover:text-blue-200">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+        var mobileMenu = document.getElementById('mobile-menu');
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>

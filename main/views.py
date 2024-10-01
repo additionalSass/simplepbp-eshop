@@ -66,7 +66,7 @@ def register(request):
             form.save()
             messages.success(request, 'Your account has been successfully created!')
             return redirect('main:login')
-    context = {'form':form}
+    context = {'form':form,}
     return render(request, 'register.html', context)
 
 def login_user(request):
@@ -90,4 +90,25 @@ def logout_user(request):
     response.delete_cookie('last_login')
     return response
 
+@login_required(login_url='/login')
+def edit_item(request, id):
+    item = Item.objects.get(pk = id)
 
+    # Set item entry sebagai instance dari form
+    form = ItemEntryForm(request.POST or None, instance=item)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('main:first_page'))
+
+    context = {'form': form}
+    return render(request, "edit_item.html", context)
+
+@login_required(login_url='/login')
+def delete_item(request, id):
+    # Get mood berdasarkan id
+    item = Item.objects.get(pk = id)
+    # Hapus mood
+    item.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:first_page'))
