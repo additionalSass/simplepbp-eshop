@@ -21,9 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-z=yppmhh5k8ytq%zveez$*#*opj)cb22pvonrrh%dv7tv02b#d')
 
-#DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id', 'vander-gerald-simplepbpshop.pbp.cs.ui.ac.id', 'dusty-penguin-fasilkomui-750583cd.koyeb.app']
 
