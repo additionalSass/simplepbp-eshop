@@ -4,13 +4,14 @@ Nama : Vander Gerald Sukandi
 
 NPM  : 1906350603
 
-## Tugas 4 Menjawab Beberapa Pertanyaan
-
+## Tugas 5 Menjawab Beberapa Pertanyaan 
+```
 Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
 Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
 Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
 Jelaskan konsep flex box dan grid layout beserta kegunaannya!
 Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+```
 
 **1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!**
 
