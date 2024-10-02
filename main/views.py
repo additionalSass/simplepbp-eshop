@@ -23,7 +23,7 @@ def first_page(request):
         'NPM':'1906350603',
         'class':'PBP A',
         'it_entries' : item_entries,
-        'last_login' : request.COOKIES['last_login'],
+        'last_login' : request.COOKIES.get('last_login', 'No login time available'),
         'current_username' : request.user.username,
     }
     return render(request,'first_page.html', context)
