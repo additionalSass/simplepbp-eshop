@@ -1,9 +1,12 @@
+from django.utils.html import strip_tags
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core import serializers
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -15,14 +18,12 @@ import datetime
 
 @login_required(login_url='/login')
 def first_page(request):
-    item_entries = Item.objects.all()
     context = {
         'application':'Simple PBP E-Shop',
         'app':'main',
         'name':'Vander Gerald Sukandi',
         'NPM':'1906350603',
         'class':'PBP A',
-        'it_entries' : item_entries,
         'last_login' : request.COOKIES.get('last_login', 'No login time available'),
         'current_username' : request.user.username,
     }
@@ -42,12 +43,14 @@ def create_item_entry(request):
     return render(request, "create_item_entry.html", context)
 
 def show_xml(request):
-    data = Item.objects.all()
+    data = Item.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 def show_json(request):
-    data = Item.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    data = Item.objects.filter(user=request.user).values(
+        'id', 'name', 'price', 'stocks', 'description', 'recom_status_last_update', 'user__username'
+    )
+    return JsonResponse(list(data), safe=False)
 
 def show_xml_by_id(request, id):
     data = Item.objects.filter(pk=id)
@@ -112,3 +115,19 @@ def delete_item(request, id):
     item.delete()
     # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('main:first_page'))
+
+@csrf_exempt
+@require_POST
+def add_item_entry_ajax(request):
+    item_name = strip_tags(request.POST.get("name"))
+    price = strip_tags(request.POST.get("price"))
+    description = strip_tags(request.POST.get("description"))
+    stocks = strip_tags(request.POST.get("stocks"))
+    user = request.user
+
+    new_mood = Item(
+        name=item_name, price=price, description=description, stocks=stocks, user=user
+    )
+    new_mood.save()
+
+    return HttpResponse(b"CREATED", status=201)

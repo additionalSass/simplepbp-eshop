@@ -4,86 +4,40 @@ Nama : Vander Gerald Sukandi
 
 NPM  : 1906350603
 
-## Tugas 5 Menjawab Beberapa Pertanyaan 
-```
-Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
-Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
-Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
-Jelaskan konsep flex box dan grid layout beserta kegunaannya!
-Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+## Tugas 6 Menjawab Beberapa Pertanyaan 
 ```
 
-**1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!**
-
-Ketika ada beberapa CSS selector untuk suatu elemen HTML, browser menentukan style mana yang akan diterapkan berdasarkan specificity dan urutan cascade. Specificity dihitung dengan melihat inline style (menggunakan style) dengan prioritas tertinggi, diikuti oleh ID selector (#), class dan attribute selector (.), kemudian element selector (seperti p { } ) yang memiliki specificity terendah. Menggunakan !important over-ride deklarasi lain, tetapi tidak direkomendasikan. Dan jika dua selector memiliki specificity yang sama, yang muncul terakhir di file css atau html akan mendapatkan presedens .
-
-
-
-**2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!**
-
-Responsive design menjamin bahwa sebuah website atau aplikasi web memberikan pengalaman pengguna yang optimal di berbagai device, dari desktop sampai mobile. Hal ini penting karena kita menginginkan User Experience yang baik dan akomodasi user terhadap web yang bisa diakses lewat mobile phone. 
-
-Contoh aplikasi web yang responsif: website tokopedia memiliki layout design yang berbeda tapi konsisten di desktop dan mobile.
-
-Contoh aplikasi web yang tidak responsif: aren.cs.ui.ac.id . Desain tidak dibuat untuk mobile . 
-
-**3.  Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!**
-
-Margin, border, dan padding adalah bagian dari css box .
-
-Margin adalah ruang diluar border yang memisahkan satu elemen dari elemen lain.
-Border adalah baris yang membungkus padding dan content.
-Padding adalah ruang di dalam border, di antara border dan content
-```
-.element {
-    margin: 25px;
-}
-.element {
-    border: 2px solid #111;
-}
-.element {
-    padding: 15px;
-}
-```
-Ketiga hal itu diimplementasikan oleh Django melalui CSS di template atau file static yang ditentukan lokasinya melalui STATIC_URL dan STATICFILES_DIRS. 
-
-Dan kita bisa membuatnya dengan class dari Tailwind CSS.
+    Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+    Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?
+    Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?
+    Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+    Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
 
 ```
-<div class="m-5 p-4 border">
-    Content
-</div>
-```
 
-**4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!***
+**1. Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!**
 
-Keduanya merupakan model layout CSS untuk menciptakan web design yang responsif.
+Penggunaan JavaScript bermanfaat untuk pembuatan website yang interaktif dan dinamis. Hal ini berarti ada client-side scripting yang amana tanpa perlu reload , tampilan bisa berubah sesuai dengan logika tertentu dan meningkatkan kualitas pengalaman pengguna. JavaScript bisa memanipulasi html dan css secara dinamis dan menangani operasi async seperti fetch. 
 
-Flexbox digunakan untuk layout satu-dimensi, bisa jadi baris atau kolom. Digunakan dengan `display:flex;` untuk containernya.
+**2.  Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?**
 
-Ada property penting seperti flex-direction, justify-content , dan align-items. Flex digunakan untuk menyesuaikan letak objek, membuat navbar, dan membuat ruang dalam container.
+Penggunaannya meunda eksekusi sampai hasil return dari fetch diselesaikan. Tanpa await, function akan execute terus menerus tanpa menunggu fetch selesai yang berarti hasilnya bisa jadi tidak sesuai dengan yang kita harapkan sebab data belum tentu tersedia saat itu juga. 
 
-Sedangkan grid layout bersifat dua-dimensi. Didefinisikan untuk kontainernya dengan `display:grid;`  . Digunakan untuk layout yang rumit seperti galeri gambar untuk sebuah website, struktur seperti tabel, dashboard, dll.
+**3.     Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?**
+
+Digunakan untuk disable csrf protection untuk Django view karena saat membuat request AJAX POST, jika tidak mengirim token csrf yang benar, DJANGO CSRF protection secara default akan menolak request. Dengan dekorator ini, view bisa menerima request AJAX itu tanpa validasi csrf default.
+
+**4.   Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?**
+
+Penting dilakukan di backend karena validasi frontend bisa dimanipulasi dan diabaikan oleh user yang mau menjadi hacker. Bisa saja dibuat request yang mengabaikan client-side check. Sanitasi data untuk backend menjamin bahwa injection attack tidak terjadi, bahwa input divalidasi dan dibersihkan sebelum processing. Menjamin bahwa data punya integritas dan aplikasi website aman terlepas dari tindakan klien yang kita tidak bisa kontrol sepenuhnya. 
 
 **5.  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**
 Membaca tutorial sebelumnya. 
-Memahami AuthenticationForm, UserCreationForm, HttpResponseRedire 
-Menambahkan dan memodifikasi templates yang sesuai
-Menambahkan baris baru mengenai User untuk foreign key model Item di models.py . 
-Melakukan python manage.py makemigrations dan python manage.py migrate
-Menambahkan @login_required(login_url='/login') ke beberapa function Tugas 3 
-
-
-**5. Jelaskan cara kamu mengimplementasikan checklist di atas secare step-by-step**
-Membaca tutorial
-Menambahkan functions terkait edit dan delete Item di views.py dan menambahkan url routing terkait. 
-Menambahkan tailwind.css .
-Membuat navbar.html .
-Mengubah base.html.
-Mengubah template
-Mengubah settings.py untuk static . 
-Menambahkan gambar...
-Melakukan deployment.. 
+Memahami kode-kode ajax yang sederhana 
+Menambahkan fungsi add_item_entry_ajax dan memodifikasi show_json di views dan routing url
+Menambahkan dan memodifikasi html templates dan menambah javascript
+menambahkan impor strip_tags untuk membersihkan di backend
+melakukan deployment 
 
 
 
