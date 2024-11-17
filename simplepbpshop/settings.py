@@ -45,13 +45,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'simplepbpshop.urls'
@@ -146,4 +146,4 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id", "http://vander-gerald-simplepbpshop.pbp.cs.ui.ac.id", "http://dusty-penguin-fasilkomui-750583cd.koyeb.app", "http://10.0.2.2",]
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://vander-gerald-simplepbpeshop.pbp.cs.ui.ac.id", "http://vander-gerald-simplepbpshop.pbp.cs.ui.ac.id", "https://dusty-penguin-fasilkomui-750583cd.koyeb.app"]
