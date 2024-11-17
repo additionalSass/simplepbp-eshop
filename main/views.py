@@ -123,11 +123,70 @@ def add_item_entry_ajax(request):
     price = strip_tags(request.POST.get("price"))
     description = strip_tags(request.POST.get("description"))
     stocks = strip_tags(request.POST.get("stocks"))
-    user = request.user
 
     new_mood = Item(
-        name=item_name, price=price, description=description, stocks=stocks, user=user
+        name=item_name,
+        price=price,
+        description=description,
+        stocks=stocks,
+        user=request.user
     )
     new_mood.save()
 
     return HttpResponse(b"CREATED", status=201)
+
+@csrf_exempt
+def create_item_entry_flutter(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            item_name = strip_tags(data.get("name", ""))
+            price = strip_tags(data.get("price", ""))
+            description = strip_tags(data.get("description", ""))
+            stocks = strip_tags(data.get("stocks", ""))
+            if not all([item_name, price, description, stocks]):
+                return JsonResponse(
+                    {"status": "error", "message": "All fields (name, price, description, stocks) of Item are required."},
+                    status=400
+                )
+
+            try:
+                price = int(price)
+                stocks = int(stocks)
+            except ValueError:
+                return JsonResponse(
+                    {"status": "error", "message": "Price must be an integer and stocks must be an integer."},
+                    status=400
+                )
+
+            new_item = Item.objects.create(
+                name=item_name,
+                price=price,
+                description=description,
+                stocks=stocks,
+                user=request.user
+            )
+
+            return JsonResponse(
+                {
+                    "status": "success",
+                    "message": "Item created successfully."
+                },
+                status=201
+            )
+
+        except json.JSONDecodeError:
+            return JsonResponse(
+                {"status": "error", "message": "Invalid JSON format."},
+                status=400
+            )
+        except Exception as e:
+            return JsonResponse(
+                {"status": "error", "message": "An unexpected error occurred."},
+                status=500
+            )
+    else:
+        return JsonResponse(
+            {"status": "error", "message": "Only POST requests are allowed."},
+            status=405
+        )

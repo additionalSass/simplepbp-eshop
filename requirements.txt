@@ -1,7 +1,8 @@
 asgiref
 certifi
 charset-normalizer
-Django
+django
+django-cors-headers
 idna
 packaging
 psycopg2-binary
